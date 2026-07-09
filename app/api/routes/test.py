@@ -47,7 +47,7 @@ async def test_rule_engine():
 
             engine = DecisionEngine()
 
-            rule_result = engine.classify(parsed_email)
+            rule_result = await engine.classify(parsed_email)
 
             results.append(
                 {

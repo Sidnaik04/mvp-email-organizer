@@ -9,6 +9,8 @@ class DecisionConfig:
     # HF
 
     HF_ACCEPT = 0.88
+    
+    HF_MINIMUM = 0.50
 
     HF_AGREEMENT = 0.80
 

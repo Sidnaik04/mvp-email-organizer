@@ -13,3 +13,15 @@ class BaseClassifier(ABC):
         self,
         email: ParsedEmail,
     ) -> ClassificationResult: ...
+
+    def build_email_context(email):
+        return f"""
+    Sender: {email.sender_name}
+    Domain: {email.sender_domain}
+
+    Subject:
+    {email.subject}
+
+    Snippet:
+    {email.snippet}
+    """

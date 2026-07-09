@@ -3,7 +3,7 @@ from app.classifiers.base import BaseClassifier
 
 class GeminiClassifier(BaseClassifier):
 
-    def predict(
+    async def predict(
         self,
         email,
     ):
