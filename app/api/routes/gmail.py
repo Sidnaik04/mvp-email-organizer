@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.database.models import User
 from app.database.session import SessionLocal
 from app.services.gmail.service import GmailService
+from app.services.parser.email_parser import EmailParser
 
 router = APIRouter(prefix="/gmail", tags=["Gmail"])
 
@@ -22,7 +23,9 @@ async def messages():
 
         email = GmailService.get_message(user=user, message_id=message["id"])
 
-        result.append(email)
+        parsed = EmailParser.parse(email)
+
+        result.append(parsed.model_dump())
 
     db.close()
 
