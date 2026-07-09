@@ -5,6 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from app.config.logging import logger
 from app.api.routes.auth import router as auth_router
 from app.api.routes.gmail import router as gmail_router
+from app.api.routes.test import router as test_router
 from app.database.db import Base, engine
 
 
@@ -32,3 +33,4 @@ async def root():
 
 app.include_router(auth_router)
 app.include_router(gmail_router)
+app.include_router(test_router)
