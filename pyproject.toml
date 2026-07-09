@@ -1,0 +1,32 @@
+[project]
+name = "mvp-email-organizer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiofiles>=25.1.0",
+    "beautifulsoup4>=4.15.0",
+    "fastapi>=0.139.0",
+    "google-api-python-client>=2.198.0",
+    "google-auth>=2.55.2",
+    "google-auth-httplib2>=0.4.0",
+    "google-auth-oauthlib>=1.4.0",
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "lxml>=6.1.1",
+    "mail-parser>=4.4.0",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.3",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.2",
+    "python-dotenv>=1.2.2",
+    "streamlit>=1.59.1",
+    "uvicorn>=0.51.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.15.20",
+]
