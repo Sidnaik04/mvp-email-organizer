@@ -6,7 +6,7 @@ from app.core.rules.engine import RuleEngine
 
 class RuleClassifier(BaseClassifier):
 
-    def predict(
+    async def predict(
         self,
         email,
     ) -> ClassificationResult:
