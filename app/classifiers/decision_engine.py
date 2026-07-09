@@ -18,39 +18,33 @@ class DecisionEngine:
         self.hf = HFClassifier()
         self.gemini = GeminiClassifier()
 
-    async def classify(self, email: ParsedEmail) -> ClassificationResult:
+    async def classify(
+        self,
+        email: ParsedEmail,
+    ) -> ClassificationResult:
 
-        # rule
+        # ---------------- Rule ----------------
+
         rule = await self.rule.predict(email)
-
         print("Rule:", rule.category, rule.confidence)
 
         if rule.confidence >= DecisionConfig.RULE_ACCEPT:
-
             return rule
 
-        # HF
+        # ---------------- HF ----------------
+
         hf = await self.hf.predict(email)
-
         print("HF:", hf.category, hf.confidence)
-
-        if (
-            hf.category == rule.category
-            and hf.confidence >= DecisionConfig.HF_AGREEMENT
-        ):
-            return hf
 
         if hf.confidence >= DecisionConfig.HF_ACCEPT:
             return hf
 
-        if hf.confidence > rule.confidence:
-            return hf
+        # ---------------- Gemini ----------------
 
-        if hf.confidence < DecisionConfig.HF_MINIMUM:
-            return rule
+        gemini = await self.gemini.predict(
+            email=email,
+            rule=rule,
+            hf=hf,
+        )
 
-        return hf
-
-        # gemini
-
-        # return await self.gemini.predict(email)
+        return gemini
