@@ -4,11 +4,19 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.config.logging import logger
 from app.api.routes.auth import router as auth_router
+from app.api.routes.gmail import router as gmail_router
+from app.database.db import Base, engine
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
+    Base.metadata.create_all(bind=engine)
+
+    logger.info("Database Initialized...")
+
     logger.info("Starting Email organizer API...")
+
     yield
 
 
@@ -23,3 +31,4 @@ async def root():
 
 
 app.include_router(auth_router)
+app.include_router(gmail_router)
