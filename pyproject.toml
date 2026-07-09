@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "aiofiles>=25.1.0",
+    "authlib>=1.7.2",
     "beautifulsoup4>=4.15.0",
     "fastapi>=0.139.0",
     "google-api-python-client>=2.198.0",
