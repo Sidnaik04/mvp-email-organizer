@@ -1,5 +1,6 @@
 from app.classifiers.base import BaseClassifier
 from app.classifiers.result import ClassificationResult
+from time import perf_counter
 
 from app.core.rules.engine import RuleEngine
 
@@ -11,7 +12,11 @@ class RuleClassifier(BaseClassifier):
         email,
     ) -> ClassificationResult:
 
+        start = perf_counter()
+
         result = RuleEngine.classify(email)
+
+        end = perf_counter()
 
         return ClassificationResult(
             source="rule",
@@ -19,4 +24,5 @@ class RuleClassifier(BaseClassifier):
             confidence=result.confidence,
             reasons=result.reasons,
             scores=result.scores,
+            latency_ms=(end - start) * 1000,
         )

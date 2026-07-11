@@ -1,0 +1,87 @@
+[
+  {
+    "email_id": "no-reply@rmp.flipkart.com",
+    "expected": "Marketing"
+  },
+  {
+    "email_id": "noreply@unstop.news",
+    "expected": "Marketing"
+  },
+  {
+    "email_id": "alerts@hdfcbank.bank.in",
+    "expected": "Bank Statments"
+  },
+  {
+    "email_id": "aiengineeringinsider@substack.com",
+    "expected": "Technical Blogs"
+  },
+  {
+    "email_id": "founders@dailycodingproblem.com",
+    "expected": "Programming"
+  },
+  {
+    "email_id": "info@realpython.com",
+    "expected": "Technical Blogs"
+  },
+  {
+    "email_id": "news@alphasignal.ai",
+    "expected": "Technical Blogs"
+  },
+  {
+    "email_id": "updates-noreply@linkedin.com",
+    "expected": "Job Opening"
+  },
+  {
+    "email_id": "superhuman@mail.joinsuperhuman.ai",
+    "expected": "Technical Blogs"
+  },
+  {
+    "email_id": "info@minis.naukri.com",
+    "expected": "Job Opening"
+  },
+  {
+    "email_id": "donotreply@match.indeed.com",
+    "expected": "Job Opening"
+  },
+  {
+    "email_id": "no-reply@leetcode.com",
+    "expected": "Programming"
+  },
+  {
+    "email_id": "news@nvidia.com",
+    "expected": "Technical Blogs"
+  },
+  {
+    "email_id": "store-news@amazon.in",
+    "expected": "Marketing"
+  },
+  {
+    "email_id": "noreply@medium.com",
+    "expected": "Technical Blogs"
+  },
+  {
+    "email_id": "aws-marketing-email-replies@amazon.com",
+    "expected": "Software"
+  },
+  {
+    "email_id": "aiengineeringinsider@substack.com",
+    "expected": "Technical Blogs"
+  },
+  {
+    "email_id": "noreply@digest.groww.in",
+    "expected": "Bank Statments"
+  },
+  {
+    "email_id": "hello@scrolllaunch.com",
+    "expected": "Software"
+  },
+
+  {
+    "email_id": "ant.wilson@supabase.com",
+    "expected": "Software"
+  },
+  {
+    "email_id": "info@offers.optimumnutrition.co.in",
+    "expected": "Fitness"
+  }
+]

@@ -47,17 +47,21 @@ async def test_rule_engine():
 
             engine = DecisionEngine()
 
-            rule_result = await engine.classify(parsed_email)
+            trace = await engine.classify(parsed_email)
 
             results.append(
                 {
                     "sender": parsed_email.sender,
                     "domain": parsed_email.sender_domain,
                     "subject": parsed_email.subject,
-                    "category": rule_result.category,
-                    "confidence": rule_result.confidence,
-                    "reasons": rule_result.reasons,
-                    "scores": rule_result.scores,
+                    "category": trace.final.category,
+                    "confidence": trace.final.confidence,
+                    "reasons": trace.final.reasons,
+                    "scores": trace.final.scores,
+                    "rule": trace.rule,
+                    "hf": trace.hf,
+                    "gemini": trace.gemini,
+                    "final": trace.final,
                 }
             )
 
