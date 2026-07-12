@@ -12,3 +12,7 @@ class DecisionTrace(BaseModel):
     gemini: ClassificationResult | None
 
     final: ClassificationResult
+    
+    decision_source: str
+    
+    model: str

@@ -12,6 +12,7 @@ from app.services.logger.classification_logger import ClassificationLogger
 from app.services.gmail.label_service import GmailLabelService
 from app.config.logging import logger
 
+import time
 
 router = APIRouter(
     prefix="/classify",
@@ -45,6 +46,8 @@ async def test_rule_engine():
 
         for message in messages:
 
+            start = time.perf_counter()
+
             if message["id"] in existing_ids:
 
                 skipped += 1
@@ -76,6 +79,8 @@ async def test_rule_engine():
                 user=user, message_id=message["id"], category=trace.final.category
             )
 
+            end = time.perf_counter()
+
             results.append(
                 {
                     "sender": parsed_email.sender,
@@ -92,7 +97,14 @@ async def test_rule_engine():
                 }
             )
 
-        return {"processed": processed, "skipped": skipped, "results": results}
+            duration_ms = round((end - start) * 1000, 2)
+
+        return {
+            "processed": processed,
+            "skipped": skipped,
+            "duration_ms": duration_ms,
+            "results": results,
+        }
 
     finally:
         db.close()

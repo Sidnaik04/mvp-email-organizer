@@ -29,7 +29,14 @@ class DecisionEngine:
         logger.info(f"Rule: {rule.category} ({rule.confidence:.2f})")
 
         if rule.confidence >= DecisionConfig.RULE_ACCEPT:
-            return DecisionTrace(rule=rule, hf=None, gemini=None, final=rule)
+            return DecisionTrace(
+                rule=rule,
+                hf=None,
+                gemini=None,
+                final=rule,
+                decision_source="rule",
+                model="rule-engine-v1",
+            )
 
         # ---------------- HF ----------------
 
@@ -37,7 +44,14 @@ class DecisionEngine:
         logger.info(f"HF: {hf.category} ({hf.confidence:.2f})")
 
         if hf.confidence >= DecisionConfig.HF_ACCEPT:
-            return DecisionTrace(rule=rule, hf=hf, gemini=None, final=hf)
+            return DecisionTrace(
+                rule=rule,
+                hf=hf,
+                gemini=None,
+                final=hf,
+                decision_source="hf",
+                model="ModernBERT-large-zeroshot-v2.0",
+            )
 
         # ---------------- Gemini ----------------
 
@@ -47,4 +61,11 @@ class DecisionEngine:
             hf=hf,
         )
 
-        return DecisionTrace(rule=rule, hf=hf, gemini=gemini, final=gemini)
+        return DecisionTrace(
+            rule=rule,
+            hf=hf,
+            gemini=gemini,
+            final=gemini,
+            decision_source="gemini",
+            model="gemini-2.5-flash",
+        )
