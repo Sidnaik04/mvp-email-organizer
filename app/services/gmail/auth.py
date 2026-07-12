@@ -6,6 +6,13 @@ settings = get_settings()
 
 oauth = OAuth()
 
+SCOPES = [
+    "openid",
+    "email",
+    "profile",
+    "https://www.googleapis.com/auth/gmail.modify",
+]
+
 oauth.register(
     name="google",
     client_id=settings.google_client_id,
@@ -13,12 +20,5 @@ oauth.register(
     server_metadata_url=(
         "https://accounts.google.com/.well-known/openid-configuration"
     ),
-    client_kwargs={
-        "scope": (
-            "openid",
-            "email",
-            "profile",
-            "https://www.googleapis.com/auth/gmail.readonly",
-        )
-    },
+    client_kwargs={"scope": " ".join(SCOPES)},
 )

@@ -22,3 +22,5 @@ wheels/
 .vscode/
 
 .idea/
+
+data/

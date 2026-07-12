@@ -1,7 +1,7 @@
 from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
-from sqlalchemy import Text, DateTime
+from sqlalchemy import Text, DateTime, Boolean, Float, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database.db import Base
 from datetime import datetime
@@ -25,37 +25,101 @@ class Email(Base):
 
     __tablename__ = "emails"
 
-    id: Mapped[int] = mapped_column(
-        primary_key=True,
-        autoincrement=True,
-    )
+    id = Column(Integer, primary_key=True)
 
-    gmail_id: Mapped[str] = mapped_column(
-        String(255),
+    gmail_id = Column(
+        String,
         unique=True,
+        nullable=False,
         index=True,
     )
 
-    thread_id: Mapped[str] = mapped_column(
-        String(255),
+    thread_id = Column(String)
+
+    sender = Column(String)
+
+    sender_domain = Column(String)
+
+    subject = Column(Text)
+
+    snippet = Column(Text)
+
+    received_at = Column(DateTime)
+
+    processed = Column(
+        Boolean,
+        default=False,
     )
 
-    sender: Mapped[str] = mapped_column(
-        String(255),
-    )
-
-    domain: Mapped[str] = mapped_column(
-        String(255),
-    )
-
-    subject: Mapped[str] = mapped_column(
-        Text,
-    )
-
-    snippet: Mapped[str] = mapped_column(
-        Text,
-    )
-
-    received_at: Mapped[datetime] = mapped_column(
+    created_at = Column(
         DateTime,
+        default=datetime.utcnow,
+    )
+
+
+class ClassificationTrace(Base):
+
+    __tablename__ = "classification_traces"
+
+    id = Column(Integer, primary_key=True)
+
+    email_id = Column(
+        Integer,
+        ForeignKey("emails.id"),
+        nullable=False,
+    )
+
+    rule_category = Column(String)
+
+    rule_confidence = Column(Float)
+
+    hf_category = Column(String)
+
+    hf_confidence = Column(Float)
+
+    gemini_category = Column(String)
+
+    gemini_confidence = Column(Float)
+
+    final_category = Column(String)
+
+    decision_source = Column(String)
+
+    latency_ms = Column(Float)
+
+    created_at = Column(
+        DateTime,
+        default=datetime.now(),
+    )
+
+
+class DatasetCandidate(Base):
+
+    __tablename__ = "dataset_candidates"
+
+    id = Column(Integer, primary_key=True)
+
+    email_id = Column(
+        Integer,
+        ForeignKey("emails.id"),
+        nullable=False,
+    )
+
+    label = Column(String)
+
+    confidence = Column(Float)
+
+    status = Column(
+        String,
+        default="PENDING",
+    )
+
+    verified = Column(
+        Boolean,
+        default=False,
+    )
+
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow,
     )
