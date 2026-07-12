@@ -10,14 +10,16 @@ from app.core.rules.engine import RuleEngine
 from app.classifiers.decision_engine import DecisionEngine
 from app.services.logger.classification_logger import ClassificationLogger
 from app.services.gmail.label_service import GmailLabelService
+from app.config.logging import logger
+
 
 router = APIRouter(
-    prefix="/test",
-    tags=["Testing"],
+    prefix="/classify",
+    tags=["Classify"],
 )
 
 
-@router.get("/rule-engine")
+@router.post("/inbox")
 async def test_rule_engine():
 
     db = SessionLocal()
@@ -56,7 +58,7 @@ async def test_rule_engine():
 
             parsed_email = EmailParser.parse(raw_email)
 
-            print(parsed_email.sender_domain)
+            logger.info(f"Sender domain: {parsed_email.sender_domain}")
 
             engine = DecisionEngine()
 
