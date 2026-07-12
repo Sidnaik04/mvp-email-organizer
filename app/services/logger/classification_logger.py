@@ -16,6 +16,8 @@ class ClassificationLogger:
             "domain": parsed_email.sender_domain,
             "subject": parsed_email.subject,
             "snippet": parsed_email.snippet,
+            "decision_source": trace.decision_source,
+            "model": trace.model,
             "rule": trace.rule.model_dump() if trace.rule else None,
             "hf": trace.hf.model_dump() if trace.hf else None,
             "gemini": trace.gemini.model_dump() if trace.gemini else None,
@@ -25,7 +27,6 @@ class ClassificationLogger:
         with open(LOG_FILE, "a", encoding="utf8") as f:
 
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
-
 
     @staticmethod
     def load_existing_ids() -> set[str]:
@@ -48,4 +49,4 @@ class ClassificationLogger:
                 except json.JSONDecodeError:
                     continue
 
-        return ids 
+        return ids
