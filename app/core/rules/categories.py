@@ -5,7 +5,7 @@ class Category(StrEnum):
 
     JOB = "Job Opening"
 
-    FITNESS = "Fitness and Gym"
+    FITNESS = "Fitness"
 
     TECH = "Technical Blogs"
 
@@ -16,5 +16,7 @@ class Category(StrEnum):
     MARKETING = "Marketing"
 
     PERSONAL = "Personal"
+
+    PROGRAMMING = "Programming"
 
     UNKNOWN = "Unknown"

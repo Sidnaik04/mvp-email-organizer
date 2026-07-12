@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-
 from app.core.rules.categories import Category
 
 
@@ -14,3 +13,5 @@ class ClassificationResult(BaseModel):
     reasons: list[str]
 
     scores: dict[str, float]
+
+    latency_ms: float

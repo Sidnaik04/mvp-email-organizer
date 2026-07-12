@@ -8,6 +8,8 @@ from app.services.parser.email_parser import EmailParser
 
 from app.core.rules.engine import RuleEngine
 from app.classifiers.decision_engine import DecisionEngine
+from app.services.logger.classification_logger import ClassificationLogger
+from app.services.gmail.label_service import GmailLabelService
 
 router = APIRouter(
     prefix="/test",
@@ -32,9 +34,20 @@ async def test_rule_engine():
             max_results=20,
         )
 
+        existing_ids = ClassificationLogger.load_existing_ids()
+
         results = []
 
+        processed = 0
+        skipped = 0
+
         for message in messages:
+
+            if message["id"] in existing_ids:
+
+                skipped += 1
+
+                continue
 
             raw_email = GmailService.get_message(
                 user=user,
@@ -47,21 +60,37 @@ async def test_rule_engine():
 
             engine = DecisionEngine()
 
-            rule_result = await engine.classify(parsed_email)
+            trace = await engine.classify(parsed_email)
+
+            ClassificationLogger.log(
+                gmail_id=message["id"], parsed_email=parsed_email, trace=trace
+            )
+
+            existing_ids.add(message["id"])
+
+            processed += 1
+
+            GmailLabelService.label_email(
+                user=user, message_id=message["id"], category=trace.final.category
+            )
 
             results.append(
                 {
                     "sender": parsed_email.sender,
                     "domain": parsed_email.sender_domain,
                     "subject": parsed_email.subject,
-                    "category": rule_result.category,
-                    "confidence": rule_result.confidence,
-                    "reasons": rule_result.reasons,
-                    "scores": rule_result.scores,
+                    "category": trace.final.category,
+                    "confidence": trace.final.confidence,
+                    "reasons": trace.final.reasons,
+                    "scores": trace.final.scores,
+                    "rule": trace.rule,
+                    "hf": trace.hf,
+                    "gemini": trace.gemini,
+                    "final": trace.final,
                 }
             )
 
-        return results
+        return {"processed": processed, "skipped": skipped, "results": results}
 
     finally:
         db.close()

@@ -5,8 +5,7 @@ from app.classifiers.hf_classifier import HFClassifier
 from app.classifiers.gemini_classifier import GeminiClassifier
 
 from app.services.parser.schemas import ParsedEmail
-from app.classifiers.result import ClassificationResult
-
+from app.classifiers.decision_trace import DecisionTrace
 from app.classifiers.config import DecisionConfig
 
 
@@ -21,7 +20,7 @@ class DecisionEngine:
     async def classify(
         self,
         email: ParsedEmail,
-    ) -> ClassificationResult:
+    ) -> DecisionTrace:
 
         # ---------------- Rule ----------------
 
@@ -29,7 +28,7 @@ class DecisionEngine:
         print("Rule:", rule.category, rule.confidence)
 
         if rule.confidence >= DecisionConfig.RULE_ACCEPT:
-            return rule
+            return DecisionTrace(rule=rule, hf=None, gemini=None, final=rule)
 
         # ---------------- HF ----------------
 
@@ -37,7 +36,7 @@ class DecisionEngine:
         print("HF:", hf.category, hf.confidence)
 
         if hf.confidence >= DecisionConfig.HF_ACCEPT:
-            return hf
+            return DecisionTrace(rule=rule, hf=hf, gemini=None, final=hf)
 
         # ---------------- Gemini ----------------
 
@@ -47,4 +46,4 @@ class DecisionEngine:
             hf=hf,
         )
 
-        return gemini
+        return DecisionTrace(rule=rule, hf=hf, gemini=gemini, final=gemini)
