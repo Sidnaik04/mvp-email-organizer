@@ -7,6 +7,7 @@ from app.classifiers.gemini_classifier import GeminiClassifier
 from app.services.parser.schemas import ParsedEmail
 from app.classifiers.decision_trace import DecisionTrace
 from app.classifiers.config import DecisionConfig
+from app.config.logging import logger
 
 
 class DecisionEngine:
@@ -25,7 +26,7 @@ class DecisionEngine:
         # ---------------- Rule ----------------
 
         rule = await self.rule.predict(email)
-        print("Rule:", rule.category, rule.confidence)
+        logger.info(f"Rule: {rule.category} ({rule.confidence:.2f})")
 
         if rule.confidence >= DecisionConfig.RULE_ACCEPT:
             return DecisionTrace(rule=rule, hf=None, gemini=None, final=rule)
@@ -33,7 +34,7 @@ class DecisionEngine:
         # ---------------- HF ----------------
 
         hf = await self.hf.predict(email)
-        print("HF:", hf.category, hf.confidence)
+        logger.info(f"HF: {hf.category} ({hf.confidence:.2f})")
 
         if hf.confidence >= DecisionConfig.HF_ACCEPT:
             return DecisionTrace(rule=rule, hf=hf, gemini=None, final=hf)
