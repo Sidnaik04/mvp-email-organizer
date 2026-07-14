@@ -43,6 +43,7 @@ async def test_rule_engine():
 
         processed = 0
         skipped = 0
+        duration_ms = 0.0
 
         for message in messages:
 

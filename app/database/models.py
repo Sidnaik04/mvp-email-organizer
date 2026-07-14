@@ -4,7 +4,7 @@ from sqlalchemy import String
 from sqlalchemy import Text, DateTime, Boolean, Float, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database.db import Base
-from datetime import datetime
+from datetime import datetime, UTC
 
 
 class User(Base):
@@ -53,7 +53,7 @@ class Email(Base):
 
     created_at = Column(
         DateTime,
-        default=datetime.utcnow,
+        default=datetime.now(UTC),
     )
 
 

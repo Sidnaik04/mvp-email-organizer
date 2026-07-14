@@ -46,8 +46,4 @@ async def auth_callback(request: Request):
 
     db.close()
 
-    return {
-        "message": "Authentication Successful",
-        "email": user["email"],
-    }
-
+    return RedirectResponse(url="http://localhost:8501/1_Dashboard")
